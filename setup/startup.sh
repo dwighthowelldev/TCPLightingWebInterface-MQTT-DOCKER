@@ -25,7 +25,8 @@ sed -i "s|MQTTcontrol|$MQTTcontrol|" /var/www/html/config.inc.php
 sed -i "s|HomeAssistant-Topic_id|$HASSTopic_id|" /var/www/html/config.inc.php
 sed -i "s|hass/status|$HASSOnline|" /var/www/html/config.inc.php
 
-#run Web Server and MQTT Posters
+#run Prep, Web Server and MQTT Posters
+/var/www/html/setup.sh
 /usr/sbin/apache2ctl -D FOREGROUND &
 /tmp/mqttposter.sh &
 /tmp/mqttgenerator.sh

@@ -24,6 +24,7 @@ ADD setup/mqttposter.sh /tmp/mqttposter.sh
 run chmod 777 "/tmp/startup.sh"
 run chmod 777 "/tmp/mqttgenerator.sh"
 run chmod 777 "/tmp/mqttposter.sh"
+run chmod 777 "/var/www/html/setup.sh"
 
 # Start up
 CMD /tmp/startup.sh
