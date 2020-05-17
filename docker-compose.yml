@@ -1,0 +1,43 @@
+version: '3'
+services:
+  tcplights:
+    build:
+      context: /home/nuc/docker/projects/tcplighting-mqtt-docker
+      dockerfile: Dockerfile
+    image: result/latest
+    ports:
+      - "4321:80"
+    environment:
+      - IP_TCPLIGHTS=192.168.200.166             # IP of the TCP Lighting Gateway
+      - IP_MQTT=192.168.200.202                  # IP of the MQTT Server
+      - PORT_TCPLIGHTS=80                        # Port of the TCP Lighting Gateway (80 is standard for v2 firmware)
+      - PORT_MQTT=1883                           # Port of the MQTT Server (1883 is standard)
+      - TCP_TIMEZONE=America/Chicago             # Enter your timezone code to use scheduling in the web app
+      - TCP_LATITUDE=32.941900                   # Enter your latitude to use the Sunup/Sundown feature
+      - TCP_LONGITUDE=-96.694780                 # Enter your longitude to use the Sunup/Sundown feature
+      - FORCE_FADE_ON=0                          # 0/1 Fade to on, as a HUE bulb does
+      - FORCE_FADE_OFF=0                         # 0/1 Fade to off, as a HUE bulb does
+      - MQTT_USERNAME=admin                      # Username for your MQTT server
+      - MQTT_PASSWORD=password                   # Password for your MQTT server
+      - APACHE_RUN_USER=www-data                 # You probably shouldn't change this. If you do, you know why.
+      - APACHE_RUN_GROUP=www-data                # You probably shouldn't change this. If you do, you know why.
+      - APACHE_LOG_DIR=/var/log/apache2          # You probably shouldn't change this. If you do, you know why.
+      - APACHE_LOCK_DIR=/var/lock/apache2        # You probably shouldn't change this. If you do, you know why.
+      - APACHE_PID_FILE=/var/run/apache2.pid     # You probably shouldn't change this. If you do, you know why.
+      - LOCAL_URL=http://localhost               # You probably shouldn't change this. If you do, you know why.
+      - USER_EMAIL=ME@TCPLIGHTS.SUCK             # You probably shouldn't change this. If you do, you know why.
+      - USER_PASSWORD=ANYTHING                   # You probably shouldn't change this. If you do, you know why.
+      - MQTTsub_id=tcp-subscriber                # You probably shouldn't change this. If you do, you know why.
+	                                              # Unique for connecting to server
+      - MQTTpub_id=tcp-publisher                 # You probably shouldn't change this. If you do, you know why. 
+	                                              # Unique for connecting to server
+      - MQTT_prefix=light                        # You probably shouldn't change this. If you do, you know why. 
+	                                              # Topic prefix for lights - ie light/<room-name>/<light-name>/<UniqueBulbID>
+      - MQTT_control=tcp                         # You probably shouldn't change this. If you do, you know why. 
+	                                              # Control topic identifier for host and script control ie control/<MQTT_control>
+      - HASSTopic_id=homeassistant               # You probably shouldn't change this. If you do, you know why.
+	                                              # Topic prefix for Home Assistant Discovery Topics - this must match with HASS
+      - HASSOnline=hass/status                   # You probably shouldn't change this. If you do, you know why.
+	                                              # Topic Home Assistant publishes to, to announce its online
+
+
