@@ -1,12 +1,22 @@
 version: '3'
 services:
+#  eclipse-mosquitto:
+#    image: eclipse-mosquitto
+#    ports:
+#      - '1883:1883'
+#      - '9001:9001'
+#    volumes:
+#      - 'mosquitto.conf:/mosquitto/config/mosquitto.conf'
+#      - /mosquitto/data
+#      - /mosquitto/log
+            
   tcplights:
     image: henr02/tcplightingwebinterface-mqtt
     ports:
       - "4321:80"
     environment:
       - IP_TCPLIGHTS=192.168.200.166             # IP of the TCP Lighting Gateway
-      - IP_MQTT=192.168.200.202                  # IP of the MQTT Server
+      - IP_MQTT=localhost                        # IP of the MQTT Server, you can use 
       - PORT_TCPLIGHTS=80                        # Port of the TCP Lighting Gateway (80 is standard for v2 firmware)
       - PORT_MQTT=1883                           # Port of the MQTT Server (1883 is standard)
       - TCP_TIMEZONE=America/Chicago             # Enter your timezone code to use scheduling in the web app
@@ -24,10 +34,8 @@ services:
       - LOCAL_URL=http://localhost               # You probably shouldn't change this. If you do, you know why.
       - USER_EMAIL=ME@TCPLIGHTS.SUCK             # You probably shouldn't change this. If you do, you know why.
       - USER_PASSWORD=ANYTHING                   # You probably shouldn't change this. If you do, you know why.
-      - MQTTsub_id=tcp-subscriber                # You probably shouldn't change this. If you do, you know why.
-                                                  # Unique for connecting to server
-      - MQTTpub_id=tcp-publisher                 # You probably shouldn't change this. If you do, you know why. 
-                                                  # Unique for connecting to server
+      - MQTTsub_id=tcp-subscriber                # You probably shouldn't change this. If you do, you know why. Unique for connecting to server.
+      - MQTTpub_id=tcp-publisher                 # You probably shouldn't change this. If you do, you know why. Unique for connecting to server.
       - MQTT_prefix=light                        # You probably shouldn't change this. If you do, you know why.
                                                   # Topic prefix for lights - ie light/<room-name>/<light-name>/<UniqueBulbID>
       - MQTT_control=tcp                         # You probably shouldn't change this. If you do, you know why. 
@@ -36,5 +44,3 @@ services:
                                                   # Topic prefix for Home Assistant Discovery Topics - this must match with HASS
       - HASSOnline=hass/status                   # You probably shouldn't change this. If you do, you know why.
                                                   # Topic Home Assistant publishes to, to announce its online
-
-
