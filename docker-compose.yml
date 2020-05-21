@@ -1,14 +1,15 @@
 version: '3'
 services:
-#  eclipse-mosquitto:
-#    image: eclipse-mosquitto
-#    ports:
-#      - '1883:1883'
-#      - '9001:9001'
-#    volumes:
-#      - 'mosquitto.conf:/mosquitto/config/mosquitto.conf'
-#      - /mosquitto/data
-#      - /mosquitto/log
+# If you already have an MQTT Server on your LAN, comment out the 
+# next 8 lines and the volumes at the bottom of the file. 
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: always
+    ports:
+      - 1883:1883
+    volumes:
+      - mosquitto-conf:/mosquitto/config
+      - mosquitto-data:/mosquitto/data
             
   tcplights:
     image: henr02/tcplightingwebinterface-mqtt
@@ -16,8 +17,8 @@ services:
       - "4321:80"
     environment:
       - IP_TCPLIGHTS=192.168.200.166             # IP of the TCP Lighting Gateway
-      - IP_MQTT=localhost                        # IP of the MQTT Server, you can use 
-      - PORT_TCPLIGHTS=80                        # Port of the TCP Lighting Gateway (80 is standard for v2 firmware)
+      - IP_MQTT=192.168.200.202                  # IP of the MQTT Server, you can use 
+      - PORT_TCPLIGHTS=80                        # Port of the TCP Lighting Gateway (80 is standard for v2 firmware, 443 for v3)
       - PORT_MQTT=1883                           # Port of the MQTT Server (1883 is standard)
       - TCP_TIMEZONE=America/Chicago             # Enter your timezone code to use scheduling in the web app
       - TCP_LATITUDE=32.941900                   # Enter your latitude to use the Sunup/Sundown feature
@@ -44,3 +45,7 @@ services:
                                                   # Topic prefix for Home Assistant Discovery Topics - this must match with HASS
       - HASSOnline=hass/status                   # You probably shouldn't change this. If you do, you know why.
                                                   # Topic Home Assistant publishes to, to announce its online
+volumes:
+  mosquitto-conf:
+  mosquitto-data:
+  
