@@ -77,8 +77,8 @@ define("LONGITUDE", TCPLONGITUDE);
 $ENABLE_MQTT = 1;                               // Enable MQTT State Publishing (1 = true, 0 = false)
 $MQTTserver = "IPMQTT";                 // Change as necessary
 $MQTTport = PORTMQTT;                           // Change as necessary
-$MQTTusername = "admin";                        // Set your username
-$MQTTpassword = "password";                     // set your password
+$MQTTusername = "MQTTUSERNAME";                        // Set your username
+$MQTTpassword = "MQTTPASSWORD";                     // set your password
 $MQTTsub_id = "MQTTsubid";                 // Make sure this is unique for connecting to server - you could use uniqid()
 $MQTTpub_id = "MQTTpubid";                  // Make sure this is unique for connecting to server - you could use uniqid()
 $MQTT_prefix = "MQTTprefix";                         // Topic prefix for lights - ie light/<room-name>/<light-name>/<UniqueBulbID>
